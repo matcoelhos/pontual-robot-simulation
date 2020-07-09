@@ -1,19 +1,24 @@
 import cv2
 from robot import Robot
 import numpy as np
-from math import pi
 
 ##Example of simulation
 # Robot instance:
-r = Robot(10,10,0)
+r = Robot(30,30,0)
 
-##Point parameters
-# Radius of circle 
-radius = 2
-# Blue color in BGR 
-color = (50, 255, 0) 
-# Line thickness of 2 px 
-thickness = 2
+def draw_robot(img, pos, theta):
+	##Point parameters
+	# Radius of circle 
+	radius = 5
+	# Blue color in BGR 
+	color = (50, 255, 0) 
+	# Line thickness of 2 px 
+	thickness = 2
+	img = cv2.circle(img, pos, radius, color, thickness)
+	img = cv2.line(img, pos,
+					(int(pos[0]+10*np.cos(theta*np.pi/180)),int(pos[1]+10*np.sin(theta*np.pi/180))),
+					(0, 0, 255),2)
+	return img
 
 ##Empty grid
 #You can replace using cv2.imread()
@@ -31,26 +36,26 @@ while True:
 		theta = r.get_theta()
 
 		#draw robot on image
-		img = cv2.circle(img, pos, radius, color, thickness)
+		img = draw_robot(img,pos, theta)
 		
 		#square movement 
 		print(pos,theta)
-		if (pos == (10,10)):
+		if (pos == (30,30)):
 			if theta == 0:
 				r.accell_l(100)
 			else:
 				r.accell_w(100)
-		elif (pos == (100,10)):
+		elif (pos == (230,30)):
 			if theta == 90:
 				r.accell_l(100)
 			else:
 				r.accell_w(100)
-		elif (pos == (100,100)):
+		elif (pos == (230,230)):
 			if theta == 180:
 				r.accell_l(80)
 			else:
 				r.accell_w(100)
-		elif (pos == (10,100)):
+		elif (pos == (30,230)):
 			if theta == 270:
 				r.accell_l(80)
 			else:
