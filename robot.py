@@ -45,8 +45,10 @@ class Robot:
 		if (self.theta >= 360):
 			self.theta-=360
 
+	## Sensors
+	#Position
 	def get_pos(self):
 		return (int(self.px), int(self.py))
-
+	#Rotation
 	def get_theta(self):
 		return self.theta
