@@ -1,4 +1,5 @@
 import math
+import numpy as np
 
 #maximum linear speed of 100 (distance units)/s
 #maximum rotation of 100 deg/s
@@ -52,3 +53,23 @@ class Robot:
 	#Rotation
 	def get_theta(self):
 		return self.theta
+	#Rotary lidar (square hitbox)
+	def get_lidar(self,grid,min_radius=10,max_radius=30):
+		p0 = self.get_pos()
+		print(p0[0],',',p0[1])
+		p_max = grid.shape
+		hitbox = np.zeros((2*max_radius,2*max_radius,3))
+		for x in range(2*max_radius):
+			for y in range(2*max_radius):
+				px = (p0[0] - max_radius) + x
+				py = (p0[1] - max_radius) + y
+				if (px < 0 
+					or py < 0 
+					or px > p_max[0]-1 
+					or py > p_max[1]-1
+					or ((px > (p0[0] - min_radius) and px < (p0[0] + min_radius))
+					and (py > (p0[1] - min_radius) and py < (p0[1] + min_radius)))):
+						hitbox[x,y] = [255,255,255]
+				else:
+					hitbox[y,x] = grid[py,px] 
+		return hitbox
