@@ -45,28 +45,29 @@ while True:
 				r.accell_l(100)
 			else:
 				r.accell_w(100)
-		elif (pos == (230,30)):
+		elif (pos == (430,30)):
 			if theta == 90:
 				r.accell_l(100)
 			else:
 				r.accell_w(100)
-		elif (pos == (230,230)):
+		elif (pos == (430,430)):
 			if theta == 180:
 				r.accell_l(80)
 			else:
 				r.accell_w(100)
-		elif (pos == (30,230)):
+		elif (pos == (30,430)):
 			if theta == 270:
 				r.accell_l(80)
 			else:
 				r.accell_w(100)
 		#run the simulation step after setting the parameters
 		r.step(0.01)
-
+		hb = r.get_lidar(img)
 		#display robot's last position
 		cv2.imshow('grid',img)
+		cv2.imshow('hitbox',hb)
 
-		k = cv2.waitKey(10) & 0xFF
+		k = cv2.waitKey(1) & 0xFF
 		if k == ord('q'):
 			break
 
